@@ -9,7 +9,13 @@
                       text-gray-600 text-sm">
                     {{discussion.topic.title}}
                     </span>
-                    <h1 class="text-lg font-medium">{{discussion.title}}</h1>
+                    <h1 class="text-lg font-medium">
+                        <template v-if="discussion.is_pinned">
+                            [Pinned]
+                        </template>
+                        {{discussion.title}}
+
+                    </h1>
                 </div>
             </div>
             <div>
