@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForumIndexController;
+use App\Http\Controllers\DiscussionShowController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('/', ForumIndexController::class)->name('home');
+Route::get('/{discussion:slug}', DiscussionShowController::class)->name('discussion.show');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
