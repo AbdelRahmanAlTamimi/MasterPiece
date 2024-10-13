@@ -4,10 +4,12 @@ import ForumLayout from '@/Layouts/ForumLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 import Pagination from "@/Components/Pagination.vue";
+import Post from "@/Components/Forum/Post.vue";
 
 
 defineProps({
-    discussion: Object
+    discussion: Object,
+    posts: Object
 })
 
 </script>
@@ -17,7 +19,7 @@ defineProps({
 
     <ForumLayout>
 
-        <div class="space-y-8">
+        <div class="space-y-3">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
@@ -39,6 +41,8 @@ defineProps({
                 </div>
             </div>
 
+
+        <Post v-for="post in posts.data" :key="post.id" :post="post"/>
 
 
         </div>
