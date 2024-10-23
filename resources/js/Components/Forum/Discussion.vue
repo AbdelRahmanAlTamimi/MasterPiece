@@ -23,7 +23,7 @@
                 </div>
                 <Link :href="route('discussion.show',discussion) " class="inline-block text-sm mt-3">
                    
-                    posted by {{ discussion.latest_post.user.username }} 
+                    Last post by {{ discussion.latest_post.user?.username || '[user deleted]' }}
                      <time :datetime="discussion.latest_post.created_at.datetime"
                            :title="discussion.latest_post.created_at.datetime">
                         {{ discussion.latest_post.created_at.human }}
