@@ -10,7 +10,8 @@ import Navigation from '@/Components/Forum/Navigation.vue';
 
 
 defineProps({
-    discussions: Object
+    discussions: Object,
+    query: Object
 })
 
 </script>
@@ -53,7 +54,7 @@ defineProps({
 
         <template #side>
 
-            <Navigation/>
+            <Navigation :query="query" />
 
         </template>
 
