@@ -12,12 +12,15 @@ class Discussion extends Model
     public function scopeOrderByPinned($query){
          $query->orderBy('pinned_at', 'desc');
     }
+
     public function isPinned(){
         return !is_null($this->pinned_at);
     }
+
     public function topic(){
         return $this->belongsTo(Topic::class);
     }
+
 
     public function posts() {
         return $this->hasMany(Post::class);
@@ -25,6 +28,10 @@ class Discussion extends Model
 
     public function post() {
         return $this->hasOne(Post::class)->whereNull('parent_id');
+    }
+
+    public function latestPost(){
+        return $this->hasOne(Post::class)->latestOfMany();
     }
 
     public function user() {

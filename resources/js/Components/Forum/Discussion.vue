@@ -21,6 +21,14 @@
                 <div class="text-sm text-gray-500 mt-3 line-clamp-1">
                     {{ discussion.post.body_preview }}
                 </div>
+                <Link :href="route('discussion.show',discussion) " class="inline-block text-sm mt-3">
+                   
+                    posted by {{ discussion.latest_post.user.username }} 
+                     <time :datetime="discussion.latest_post.created_at.datetime"
+                           :title="discussion.latest_post.created_at.datetime">
+                        {{ discussion.latest_post.created_at.human }}
+                     </time>
+                </Link>
             </div>
             <div>
                 avatar
