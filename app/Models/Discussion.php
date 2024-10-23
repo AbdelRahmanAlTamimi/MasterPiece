@@ -13,6 +13,17 @@ class Discussion extends Model
          $query->orderBy('pinned_at', 'desc');
     }
 
+    public function scopeOrderByLastPost($query)
+    {
+        $query->orderBy(
+            Post::select('created_at')
+                ->whereColumn('posts.discussion_id', 'discussions.id')
+                ->latest()
+                ->take(1),
+            'desc'
+        );
+    }
+
     public function isPinned(){
         return !is_null($this->pinned_at);
     }

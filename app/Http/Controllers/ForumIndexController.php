@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 
 class ForumIndexController extends Controller
 {
+  
   public function __invoke() {
     return inertia()->render('Forum/Index',[
 
          'discussions' => DiscussionResource::collection(
              Discussion::with(['topic','post','latestPost.user','participants'])
                 ->orderByPinned()
-                 ->latest()
+                ->orderByLastPost()
                  ->paginate(5)
          )
 
