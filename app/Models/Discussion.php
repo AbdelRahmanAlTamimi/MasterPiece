@@ -36,6 +36,12 @@ class Discussion extends Model
     public function posts() {
         return $this->hasMany(Post::class);
     }
+    
+    public function replies()
+    {
+        return $this->hasMany(Post::class)
+            ->whereNotNull('parent_id');
+    }
 
     public function post() {
         return $this->hasOne(Post::class)->whereNull('parent_id');

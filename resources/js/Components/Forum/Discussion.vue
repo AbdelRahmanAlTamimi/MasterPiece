@@ -30,12 +30,15 @@
                      </time>
                 </Link>
             </div>
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 flex flex-col items-end">
                 <div class="flex items-center space-x-1">
                         <img :src="participant.avatar_url" alt="" v-for="participant in participants"
                         :key="participant.id" class="h-6 w-6 rounded-full ring-2 ring-white
                         first-of-type:h-7 first-of-type:w-7">
                         <span class="!ml-1 text-sm text-gray-600" v-if="discussion.participants.length > 2">+ {{ discussion.participants.length - 2}} more</span>
+                </div>
+                <div class="text-sm mt-3">
+                    {{ pluralize('reply', discussion.replies_count, true) }}
                 </div>
             </div>
         </div>
@@ -45,7 +48,8 @@
 <script setup>
 
 import { Link } from '@inertiajs/vue3'
-import { computed } from 'vue';
+import { computed } from 'vue'
+import pluralize from 'pluralize'
 const props = defineProps({
 
     discussion: Object

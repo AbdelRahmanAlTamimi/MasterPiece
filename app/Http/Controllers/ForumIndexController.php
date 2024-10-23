@@ -15,6 +15,7 @@ class ForumIndexController extends Controller
 
          'discussions' => DiscussionResource::collection(
              Discussion::with(['topic','post','latestPost.user','participants'])
+                ->withCount('replies')
                 ->orderByPinned()
                 ->orderByLastPost()
                  ->paginate(5)
