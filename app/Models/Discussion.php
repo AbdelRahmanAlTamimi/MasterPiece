@@ -37,4 +37,8 @@ class Discussion extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function participants(){
+        return $this->hasManyThrough(User::class, Post::class,'discussion_id','id','id','user_id')->distinct();
+    }
 }
