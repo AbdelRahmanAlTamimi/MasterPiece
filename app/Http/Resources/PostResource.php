@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class PostResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class PostResource extends JsonResource
             'id'=>$this->id,
             'body'=>$this->body,
             'user'=>PublicUserResource::make($this->whenLoaded('user')),
+            'body_preview'=>Str::limit($this->body,200),
             'created_at'=>DateTimeResource::make($this->created_at),
         ];
     }
