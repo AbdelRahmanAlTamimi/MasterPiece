@@ -8,9 +8,8 @@
     use Inertia\Inertia;
     
     // Route::resource('posts', PostController::class);
-    require __DIR__.'/auth.php';
-
-
+    
+    
     Route::get('/', function () {
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
@@ -19,16 +18,17 @@
             'phpVersion' => PHP_VERSION,
         ]);
     });
-
+    
     Route::get('/', ForumIndexController::class)->name('home');
-    Route::get('/{discussion:slug}', DiscussionShowController::class)->name('discussion.show');
-
-
+    Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->name('discussion.show');
+    
+    
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
-
-
-
+    
+    
+    
+    require __DIR__.'/auth.php';
