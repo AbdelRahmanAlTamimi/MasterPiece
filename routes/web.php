@@ -7,7 +7,7 @@
     use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
     
-    // Route::resource('posts', PostController::class);
+
     
     
     Route::get('/', function () {
