@@ -1,5 +1,4 @@
 <?php
-
 return [
     'code_highlighting' => [
         /*
