@@ -33,9 +33,9 @@ onMounted(() => {
     scrollToPost(props.postId)
 })
 
-onUpdated(() => {
-    scrollToPost(props.postId)
-})
+// onUpdated(() => {
+//     scrollToPost(props.postId)
+// })
 
 const deleteDiscussion = () => {
     if (window.confirm('Are you sure?')) {
@@ -45,6 +45,7 @@ const deleteDiscussion = () => {
 </script>
 
 <template>
+
     <Head :title="discussion.title" />
 
     <ForumLayout>
@@ -74,13 +75,15 @@ const deleteDiscussion = () => {
             </div>
 
             <template v-if="posts.data.length">
-                <Post v-for="post in posts.data" :key="post.id" :post="post" />
+                <Post v-for="post in posts.data" :key="post.id" :post="post"
+                    :isSolution="discussion.solution?.id === post.id" />
                 <Pagination class="!mt-6" :pagination="posts.meta" />
             </template>
         </div>
 
         <template #side>
-            <PrimaryButton v-on:click="showCreatePostForm(discussion)" class="w-full flex justify-center h-10" v-if="discussion.user_can.reply">
+            <PrimaryButton v-on:click="showCreatePostForm(discussion)" class="w-full flex justify-center h-10"
+                v-if="discussion.user_can.reply">
                 Reply to discussion
             </PrimaryButton>
             <Navigation :query="query" />
