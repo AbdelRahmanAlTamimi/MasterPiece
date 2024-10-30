@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\QueryFilters\MentionedQueryFilter;
 use App\Http\QueryFilters\MineQueryFilter;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\QueryFilters\ParticipatingQueryFilter;
@@ -15,30 +14,32 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-
-
 class ForumIndexController extends Controller
 {
-  
-  public function __invoke(Request $request) {
-    return inertia()->render('Forum/Index',[
+    public function __invoke(Request $request)
+    {
+        return inertia()->render('Forum/Index', [
+            'query' => (object) $request->query(),
 
-          'query' => (object) $request->query(),
-         'discussions' => DiscussionResource::collection(
-             QueryBuilder::for(Discussion::class)
-                ->allowedFilters($this->allowedFilters())
-                ->with(['topic','post','latestPost.user','participants'])
-                ->withCount('replies')
-                ->orderByPinned()
-                ->orderByLastPost()
-                ->paginate(5)
-                ->appends($request->query())
-         )
+            'discussions' => DiscussionResource::collection(
+                QueryBuilder::for(Discussion::class)
+                    ->allowedFilters($this->allowedFilters())
+                    ->with(['topic', 'post', 'latestPost.user', 'participants'])
+                    ->withCount('replies')
+                    ->orderByPinned()
+                    ->orderByLastPost()
+                    ->tap(function ($builder) use ($request) {
+                        if (filled($request->search)) {
+                            return $builder->whereIn('id', Discussion::search($request->search)->get()->pluck('id'));
+                        }
+                    })
+                    ->paginate(5)
+                    ->appends($request->query())
+            )
+        ]);
+    }
 
-    ]);
-  }
-
-   protected function allowedFilters()
+    protected function allowedFilters()
     {
         return [
             AllowedFilter::custom('noreplies', new NoRepliesQueryFilter()),
@@ -48,7 +49,6 @@ class ForumIndexController extends Controller
 
             AllowedFilter::custom('mine', new MineQueryFilter()),
             AllowedFilter::custom('participating', new ParticipatingQueryFilter()),
-            AllowedFilter::custom('mentioned', new MentionedQueryFilter()),
         ];
     }
 }
