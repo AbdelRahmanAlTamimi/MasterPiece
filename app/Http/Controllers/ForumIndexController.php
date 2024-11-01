@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\QueryFilters\MentionedQueryFilter;
 use App\Http\QueryFilters\MineQueryFilter;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\QueryFilters\ParticipatingQueryFilter;
@@ -33,7 +34,7 @@ class ForumIndexController extends Controller
                             return $builder->whereIn('id', Discussion::search($request->search)->get()->pluck('id'));
                         }
                     })
-                    ->paginate(5)
+                    ->paginate(10)
                     ->appends($request->query())
             )
         ]);
@@ -49,6 +50,7 @@ class ForumIndexController extends Controller
 
             AllowedFilter::custom('mine', new MineQueryFilter()),
             AllowedFilter::custom('participating', new ParticipatingQueryFilter()),
+            AllowedFilter::custom('mentioned', new MentionedQueryFilter()),
         ];
     }
 }
