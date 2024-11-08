@@ -63,7 +63,7 @@ const deleteDiscussion = () => {
                         </h1>
                         <ul>
                             <li v-if="discussion.user_can.delete">
-                                <button class="text-indigo-700 text-sm" v-on:click="deleteDiscussion">Delete</button>
+                                <button class="text-orange-500 text-sm" v-on:click="deleteDiscussion">Delete</button>
                             </li>
                         </ul>
                     </div>
