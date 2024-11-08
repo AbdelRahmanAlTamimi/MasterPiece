@@ -7,9 +7,14 @@ use App\Http\Controllers\DiscussionStoreController;
 use App\Http\Controllers\ForumIndexController;
 use App\Http\Controllers\MarkdownController;
 use App\Http\Controllers\PostDestroyController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostPatchController;
 use App\Http\Controllers\PostStoreController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SummaryController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\DiscussionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,6 +41,13 @@ Route::get('/', function () {
 
 Route::get('/', ForumIndexController::class)->name('home');
 Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->name('discussions.show');
+
+// New routes for additional pages
+Route::get('/summary', [SummaryController::class, 'index'])->name('summary');
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/topics', [TopicController::class, 'index'])->name('topics');
+Route::get('/discussions', [DiscussionController::class, 'index'])->name('discussions');
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
 Route::post('/markdown', MarkdownController::class)->name('markdown');
 

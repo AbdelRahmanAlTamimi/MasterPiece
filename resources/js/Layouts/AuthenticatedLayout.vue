@@ -22,15 +22,30 @@ const showingNavigationDropdown = ref(false);
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('home')">
                                     <img src="/svg/Orange_logo.svg" alt="Logo"
-                                        class="block h-9 w-auto fill-current text-gray-800"
+                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex ">
-                                <NavLink :href="route('home')" :active="route().current('home')" :class="text-gray-100">
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('home')" :active="route().current('home')" class="text-gray-100">
                                     Forum
+                                </NavLink>
+                                <NavLink :href="route('summary')" :active="route().current('summary')" class="text-gray-100">
+                                    Summary
+                                </NavLink>
+                                <NavLink :href="route('users')" :active="route().current('users')" class="text-gray-100">
+                                    Users
+                                </NavLink>
+                                <NavLink :href="route('topics')" :active="route().current('topics')" class="text-gray-100">
+                                    Topics
+                                </NavLink>
+                                <NavLink :href="route('discussions')" :active="route().current('discussions')" class="text-gray-100">
+                                    Discussions
+                                </NavLink>
+                                <NavLink :href="route('posts')" :active="route().current('posts')" class="text-gray-100">
+                                    Posts
                                 </NavLink>
                             </div>
                         </div>
@@ -43,7 +58,7 @@ const showingNavigationDropdown = ref(false);
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2  text-sm leading-4 font-medium  text-gray-500  hover:text-white focus:outline-none transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium text-gray-500 hover:text-white focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {{ $page.props.auth.user.name }}
 
@@ -72,18 +87,14 @@ const showingNavigationDropdown = ref(false);
                                 </Dropdown>
                             </div>
 
-                        <div v-else class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex h-16">
-
-                            <NavLink :href="route('login')" :active="route().current('login')">
-                                Login
-                            </NavLink>
-
-                            <NavLink :href="route('register')" :active="route().current('register')">
-                                Register
-                            </NavLink>
-
-                        </div>
-
+                            <div v-else class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex h-16">
+                                <NavLink :href="route('login')" :active="route().current('login')">
+                                    Login
+                                </NavLink>
+                                <NavLink :href="route('register')" :active="route().current('register')">
+                                    Register
+                                </NavLink>
+                            </div>
                         </div>
 
                         <!-- Hamburger -->
@@ -127,6 +138,21 @@ const showingNavigationDropdown = ref(false);
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                             Forum
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('summary')" :active="route().current('summary')">
+                            Summary
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('users')" :active="route().current('users')">
+                            Users
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('topics')" :active="route().current('topics')">
+                            Topics
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('discussions')" :active="route().current('discussions')">
+                            Discussions
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('posts')" :active="route().current('posts')">
+                            Posts
                         </ResponsiveNavLink>
                     </div>
 
