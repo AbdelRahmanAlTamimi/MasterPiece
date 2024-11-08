@@ -44,8 +44,17 @@ Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->n
 
 // New routes for additional pages
 Route::get('/summary', [SummaryController::class, 'index'])->name('summary');
+
 Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
 Route::get('/topics', [TopicController::class, 'index'])->name('topics');
+Route::get('/topics/{topic}', [TopicController::class, 'show'])->name('topics.show');
+Route::get('/topics/{topic}/edit', [TopicController::class, 'edit'])->name('topics.edit');
+Route::delete('/topics/{topic}', [TopicController::class, 'destroy'])->name('topics.destroy');
+
 Route::get('/discussions', [DiscussionController::class, 'index'])->name('discussions');
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 

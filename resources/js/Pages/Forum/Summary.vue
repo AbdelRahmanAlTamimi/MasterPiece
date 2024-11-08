@@ -1,6 +1,6 @@
 
 <template>
-    <ForumLayout>
+    <NavigationMenu />
         <div>
             <h1>Summary</h1>
             <ul>
@@ -10,11 +10,10 @@
                 <li>Posts: {{ postCount }}</li>
             </ul>
         </div>
-    </ForumLayout>
+
 </template>
 
 <script setup>
-import ForumLayout from '@/Layouts/ForumLayout.vue';
-
+import NavigationMenu from "@/Components/NavigationMenu.vue";
 defineProps(['userCount', 'topicCount', 'discussionCount', 'postCount']);
 </script>
