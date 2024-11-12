@@ -19,19 +19,51 @@ class TopicController extends Controller
         ]);
     }
 
-    public function show(Topic $topic)
+    public function create()
     {
-        return Inertia::render('Forum/TopicDetails', [
-            'topic' => $topic,
-        ]);
+        return Inertia::render('Forum/CreateTopic');
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:topics',
+        ]);
+
+        Topic::create($validated);
+
+        return redirect()->route('topics')->with('success', 'Topic created successfully');
+    }
+
+
+
+
 
     public function edit(Topic $topic)
     {
         return Inertia::render('Forum/EditTopic', [
-            'topic' => $topic,
+            'topic' => $topic
         ]);
     }
+
+    public function update(Request $request, Topic $topic)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('topics')->ignore($topic->id),
+            ],
+        ]);
+
+        $topic->update($validated);
+
+        return redirect()->route('topics')->with('success', 'Topic updated successfully');
+    }
+
 
     public function destroy(Topic $topic)
     {

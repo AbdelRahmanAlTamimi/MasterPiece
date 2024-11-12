@@ -46,13 +46,18 @@ Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->n
 Route::get('/summary', [SummaryController::class, 'index'])->name('summary');
 
 Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::get('/topics', [TopicController::class, 'index'])->name('topics');
+Route::get('/topics/create', [TopicController::class, 'create'])->name('topics.create');
+Route::post('/topics', [TopicController::class, 'store'])->name('topics.store');
 Route::get('/topics/{topic}', [TopicController::class, 'show'])->name('topics.show');
 Route::get('/topics/{topic}/edit', [TopicController::class, 'edit'])->name('topics.edit');
+Route::put('/topics/{topic}', [TopicController::class, 'update'])->name('topics.update');
 Route::delete('/topics/{topic}', [TopicController::class, 'destroy'])->name('topics.destroy');
 
 Route::get('/discussions', [DiscussionController::class, 'index'])->name('discussions');
