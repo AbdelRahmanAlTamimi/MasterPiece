@@ -20,6 +20,16 @@ class DiscussionController extends Controller
         ]);
     }
 
+    public function create()
+    {
+
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
     public function show(Discussion $discussion)
     {
         return Inertia::render('Forum/DiscussionDetails', [

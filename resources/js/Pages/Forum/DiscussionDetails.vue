@@ -1,6 +1,23 @@
 <template>
     <NavigationMenu />
     <div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+
+        <div v-if="$page.props.flash.success"
+             class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded relative"
+             role="alert"
+        >
+            <span class="block sm:inline">{{ $page.props.flash.success }}</span>
+            <button
+                @click="$page.props.flash.success = null"
+                class="absolute top-0 bottom-0 right-0 px-4 py-3"
+            >
+                <span class="sr-only">Close</span>
+                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">Discussion Details</h1>
             <div class="space-x-2">
