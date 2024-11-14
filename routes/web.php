@@ -61,6 +61,13 @@ Route::put('/topics/{topic}', [TopicController::class, 'update'])->name('topics.
 Route::delete('/topics/{topic}', [TopicController::class, 'destroy'])->name('topics.destroy');
 
 Route::get('/discussions', [DiscussionController::class, 'index'])->name('discussions');
+Route::get('/discussions/create', [DiscussionController::class, 'create'])->name('discussions.create');
+Route::post('/discussions', [DiscussionController::class, 'store'])->name('discussions.store');
+Route::get('/discussions/{discussion}', [DiscussionController::class, 'show'])->name('discussions.show');
+Route::get('/discussions/{discussion}/edit', [DiscussionController::class, 'edit'])->name('discussions.edit');
+Route::put('/discussions/{discussion}', [DiscussionController::class, 'update'])->name('discussions.update');
+Route::delete('/discussions/{discussion}', [DiscussionController::class, 'destroy'])->name('discussions.destroy');
+
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
 Route::post('/markdown', MarkdownController::class)->name('markdown');
