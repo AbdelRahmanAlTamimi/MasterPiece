@@ -6,6 +6,7 @@
             title="Discussions"
             :headers="tableHeaders"
             :items="discussions"
+            :showDetailsButton="false"
             @view="viewDiscussion"
             @edit="editDiscussion"
             @delete="deleteDiscussion"

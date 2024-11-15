@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { ref,computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -8,6 +8,12 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import {route} from "ziggy-js";
 
 const showingNavigationDropdown = ref(false);
+
+const { props } = usePage();
+const user = props.auth.user;
+const isAdmin = computed(() => {
+    return user && user.role === 'admin';
+});
 </script>
 
 <template>
@@ -30,19 +36,45 @@ const showingNavigationDropdown = ref(false);
                         <NavLink :href="route('home')" :active="route().current('home')" class="text-gray-100">
                             Forum
                         </NavLink>
-                        <NavLink :href="route('summary')" :active="route().current('summary')" class="text-gray-100">
+                        <!-- Visible to Admins Only -->
+                        <NavLink
+                            v-if="isAdmin"
+                            :href="route('summary')"
+                            :active="route().current('summary')"
+                            class="text-gray-100"
+                        >
                             Summary
                         </NavLink>
-                        <NavLink :href="route('users.index')" :active="route().current('users')" class="text-gray-100">
+                        <NavLink
+                            v-if="isAdmin"
+                            :href="route('users.index')"
+                            :active="route().current('users')"
+                            class="text-gray-100"
+                        >
                             Users
                         </NavLink>
-                        <NavLink :href="route('topics.index')" :active="route().current('topics')" class="text-gray-100">
+                        <NavLink
+                            v-if="isAdmin"
+                            :href="route('topics.index')"
+                            :active="route().current('topics')"
+                            class="text-gray-100"
+                        >
                             Topics
                         </NavLink>
-                        <NavLink :href="route('discussions.index')" :active="route().current('discussions')" class="text-gray-100">
+                        <NavLink
+                            v-if="isAdmin"
+                            :href="route('discussions.index')"
+                            :active="route().current('discussions')"
+                            class="text-gray-100"
+                        >
                             Discussions
                         </NavLink>
-                        <NavLink :href="route('posts.index')" :active="route().current('posts')" class="text-gray-100">
+                        <NavLink
+                            v-if="isAdmin"
+                            :href="route('posts.index')"
+                            :active="route().current('posts')"
+                            class="text-gray-100"
+                        >
                             Posts
                         </NavLink>
                     </div>
@@ -137,19 +169,40 @@ const showingNavigationDropdown = ref(false);
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     Forum
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('summary')" :active="route().current('summary')">
+                <!-- Visible to Admins Only -->
+                <ResponsiveNavLink
+                    v-if="isAdmin"
+                    :href="route('summary')"
+                    :active="route().current('summary')"
+                >
                     Summary
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('users.index')" :active="route().current('users')">
+                <ResponsiveNavLink
+                    v-if="isAdmin"
+                    :href="route('users.index')"
+                    :active="route().current('users')"
+                >
                     Users
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('topics.index')" :active="route().current('topics')">
+                <ResponsiveNavLink
+                    v-if="isAdmin"
+                    :href="route('topics.index')"
+                    :active="route().current('topics')"
+                >
                     Topics
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('discussions.index')" :active="route().current('discussions')">
+                <ResponsiveNavLink
+                    v-if="isAdmin"
+                    :href="route('discussions.index')"
+                    :active="route().current('discussions')"
+                >
                     Discussions
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts')">
+                <ResponsiveNavLink
+                    v-if="isAdmin"
+                    :href="route('posts.index')"
+                    :active="route().current('posts')"
+                >
                     Posts
                 </ResponsiveNavLink>
             </div>

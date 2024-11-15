@@ -52,14 +52,16 @@ Route::get('/', ForumIndexController::class)->name('home');
 | Summary Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/summary', [SummaryController::class, 'index'])->name('summary');
+Route::get('/summary', [SummaryController::class, 'index'])
+    ->middleware(['auth', 'admin'])
+    ->name('summary');
 
 /*
 |--------------------------------------------------------------------------
 | User Routes
 |--------------------------------------------------------------------------
 */
-Route::prefix('users')->name('users.')->group(function () {
+Route::prefix('users')->middleware(['auth', 'admin'])->name('users.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::get('/create', [UserController::class, 'create'])->name('create');
     Route::post('/', [UserController::class, 'store'])->name('store');
@@ -73,7 +75,7 @@ Route::prefix('users')->name('users.')->group(function () {
 | Topic Routes
 |--------------------------------------------------------------------------
 */
-Route::prefix('topics')->name('topics.')->group(function () {
+Route::prefix('topics')->middleware(['auth', 'admin'])->name('topics.')->group(function () {
     Route::get('/', [TopicController::class, 'index'])->name('index');
     Route::get('/create', [TopicController::class, 'create'])->name('create');
     Route::post('/', [TopicController::class, 'store'])->name('store');
@@ -88,33 +90,41 @@ Route::prefix('topics')->name('topics.')->group(function () {
 | Discussion Routes
 |--------------------------------------------------------------------------
 */
-Route::prefix('discussions')->name('discussions.')->group(function () {
+Route::prefix('discussions')->middleware(['auth', 'admin'])->name('discussions.')->group(function () {
     Route::get('/', [DiscussionController::class, 'index'])->name('index');
     Route::get('/create', [DiscussionController::class, 'create'])->name('create');
-    Route::post('/', DiscussionStoreController::class)->name('store');
     Route::get('/{discussion:slug}/edit', [DiscussionController::class, 'edit'])->name('edit');
     Route::put('/{discussion}', [DiscussionController::class, 'update'])->name('update');
-    Route::delete('/{discussion}', DiscussionDestroyController::class)->name('destroy');
-    Route::patch('/{discussion}/solution', DiscussionSolutionPatchController::class)->name('solution.update');
-    Route::post('/{discussion}/posts', PostStoreController::class)->name('posts.store');
+
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/discussions', DiscussionStoreController::class)->name('discussions.store');
+    Route::post('/discussions/{discussion}/posts', PostStoreController::class)->name('posts.store');
+    Route::delete('/discussions/{discussion}', DiscussionDestroyController::class)->name('discussions.destroy');
+    Route::patch('/discussions/{discussion}/solution', DiscussionSolutionPatchController::class)->name('discussions.solution.patch');
 });
 
 
 Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->name('discussions.show');
-Route::get('/discussions/{discussion}', [DiscussionController::class, 'show'])->name('discussion.show');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Post Routes
 |--------------------------------------------------------------------------
 */
-Route::prefix('posts')->name('posts.')->group(function () {
+Route::prefix('posts')->middleware(['auth', 'admin'])->name('posts.')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/{post}', [PostController::class, 'show'])->name('show');
-    Route::get('/{post}/edit', [PostController::class, 'edit'])->name('edit');
-    Route::patch('/{post}', PostPatchController::class)->name('update');
-    Route::delete('/{post}', PostDestroyController::class)->name('destroy');
+    Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
 });
-Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+
+Route::middleware('auth')->group(function () {
+    Route::patch('/posts/{post}', PostPatchController::class)->name('posts.patch');
+    Route::delete('/posts/{post}', PostDestroyController::class)->name('posts.destroy');
+});
 
 /*
 |--------------------------------------------------------------------------
