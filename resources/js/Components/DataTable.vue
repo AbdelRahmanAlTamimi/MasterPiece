@@ -13,7 +13,10 @@
                     {{ header.label }}
                 </th>
                 <!-- Actions Header -->
-                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
+                <th
+                    v-if="showActions"
+                    class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
                     Actions
                 </th>
             </tr>
@@ -21,14 +24,36 @@
             <tbody>
             <tr v-for="item in items" :key="item.id">
                 <!-- Table Data -->
-                <td v-for="header in headers" :key="header.key" class="py-2 px-4 border-b border-gray-200">
+                <td
+                    v-for="header in headers"
+                    :key="header.key"
+                    class="py-2 px-4 border-b border-gray-200"
+                >
                     {{ item[header.key] }}
                 </td>
                 <!-- Actions Column -->
-                <td class="py-2 px-4 border-b border-gray-200">
-                    <button @click="viewDetails(item)" class="text-blue-500 hover:underline mr-2">Details</button>
-                    <button @click="editItem(item)" class="text-green-500 hover:underline mr-2">Edit</button>
-                    <button @click="deleteItem(item)" class="text-red-500 hover:underline">Delete</button>
+                <td v-if="showActions" class="py-2 px-4 border-b border-gray-200">
+                    <button
+                        v-if="showDetailsButton"
+                        @click="viewDetails(item)"
+                        class="text-blue-500 hover:underline mr-2"
+                    >
+                        Details
+                    </button>
+                    <button
+                        v-if="showEditButton"
+                        @click="editItem(item)"
+                        class="text-green-500 hover:underline mr-2"
+                    >
+                        Edit
+                    </button>
+                    <button
+                        v-if="showDeleteButton"
+                        @click="deleteItem(item)"
+                        class="text-red-500 hover:underline"
+                    >
+                        Delete
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -37,7 +62,7 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps } from 'vue';
+import { defineEmits, defineProps, computed } from 'vue';
 
 const props = defineProps({
     title: {
@@ -51,6 +76,18 @@ const props = defineProps({
     items: {
         type: Array,
         required: true,
+    },
+    showDetailsButton: {
+        type: Boolean,
+        default: true,
+    },
+    showEditButton: {
+        type: Boolean,
+        default: true,
+    },
+    showDeleteButton: {
+        type: Boolean,
+        default: true,
     },
 });
 
@@ -67,4 +104,8 @@ function editItem(item) {
 function deleteItem(item) {
     emit('delete', item);
 }
+
+const showActions = computed(
+    () => props.showDetailsButton || props.showEditButton || props.showDeleteButton
+);
 </script>

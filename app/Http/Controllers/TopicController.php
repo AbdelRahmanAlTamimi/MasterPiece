@@ -33,7 +33,7 @@ class TopicController extends Controller
 
         Topic::create($validated);
 
-        return redirect()->route('topics')->with('success', 'Topic created successfully');
+        return redirect()->route('topics.index')->with('success', 'Topic created successfully');
     }
 
 
@@ -61,13 +61,13 @@ class TopicController extends Controller
 
         $topic->update($validated);
 
-        return redirect()->route('topics')->with('success', 'Topic updated successfully');
+        return redirect()->route('topics.index')->with('success', 'Topic updated successfully');
     }
 
 
     public function destroy(Topic $topic)
     {
         $topic->delete();
-        return redirect()->route('topics')->with('success', 'Topic deleted successfully.');
+        return redirect()->route('topics.index')->with('success', 'Topic deleted successfully.');
     }
 }

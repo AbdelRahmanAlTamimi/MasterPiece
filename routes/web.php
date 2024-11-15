@@ -15,37 +15,44 @@ use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\DiscussionController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__.'/auth.php';
 
 /*
 |--------------------------------------------------------------------------
 | Welcome Route
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+//Route::get('/', function () {
+//    return Inertia::render('Welcome', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register'),
+//        'laravelVersion' => Application::VERSION,
+//        'phpVersion' => PHP_VERSION,
+//    ]);
+//});
 
 /*
 |--------------------------------------------------------------------------
 | Home Route
 |--------------------------------------------------------------------------
 */
-Route::get('/', ForumIndexController::class)->name('forum.index');
+Route::get('/', ForumIndexController::class)->name('home');
 
 /*
 |--------------------------------------------------------------------------
 | Summary Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/summary', [SummaryController::class, 'index'])->name('summary.index');
+Route::get('/summary', [SummaryController::class, 'index'])->name('summary');
 
 /*
 |--------------------------------------------------------------------------
@@ -85,14 +92,16 @@ Route::prefix('discussions')->name('discussions.')->group(function () {
     Route::get('/', [DiscussionController::class, 'index'])->name('index');
     Route::get('/create', [DiscussionController::class, 'create'])->name('create');
     Route::post('/', DiscussionStoreController::class)->name('store');
-    Route::get('/{discussion:slug}', DiscussionShowController::class)->name('show');
-    Route::get('/{discussion}/edit', [DiscussionController::class, 'edit'])->name('edit');
+    Route::get('/{discussion:slug}/edit', [DiscussionController::class, 'edit'])->name('edit');
     Route::put('/{discussion}', [DiscussionController::class, 'update'])->name('update');
     Route::delete('/{discussion}', DiscussionDestroyController::class)->name('destroy');
     Route::patch('/{discussion}/solution', DiscussionSolutionPatchController::class)->name('solution.update');
     Route::post('/{discussion}/posts', PostStoreController::class)->name('posts.store');
 });
 
+
+Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->name('discussions.show');
+Route::get('/discussions/{discussion}', [DiscussionController::class, 'show'])->name('discussion.show');
 /*
 |--------------------------------------------------------------------------
 | Post Routes
@@ -100,9 +109,12 @@ Route::prefix('discussions')->name('discussions.')->group(function () {
 */
 Route::prefix('posts')->name('posts.')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('/{post}', [PostController::class, 'show'])->name('show');
+    Route::get('/{post}/edit', [PostController::class, 'edit'])->name('edit');
     Route::patch('/{post}', PostPatchController::class)->name('update');
     Route::delete('/{post}', PostDestroyController::class)->name('destroy');
 });
+Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -122,10 +134,100 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function (
     Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Auth Routes
-|--------------------------------------------------------------------------
-*/
 
-require __DIR__.'/auth.php';
+
+
+//use App\Http\Controllers\{
+//    DiscussionDestroyController,
+//    DiscussionShowController,
+//    DiscussionSolutionPatchController,
+//    DiscussionStoreController,
+//    ForumIndexController,
+//    MarkdownController,
+//    PostDestroyController,
+//    PostController,
+//    PostPatchController,
+//    PostStoreController,
+//    ProfileController,
+//    SummaryController,
+//    UserController,
+//    TopicController,
+//    DiscussionController
+//};
+//use Illuminate\Foundation\Application;
+//use Illuminate\Support\Facades\Route;
+//use Inertia\Inertia;
+//
+///*
+//|--------------------------------------------------------------------------
+//| Web Routes
+//|--------------------------------------------------------------------------
+//|
+//| Here is where you can register web routes for your application. These
+//| routes are loaded by the RouteServiceProvider within a group which
+//| contains the "web" middleware group. Now create something great!
+//|
+//*/
+//
+//Route::get('/', function () {
+//    return Inertia::render('Welcome', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register'),
+//        'laravelVersion' => Application::VERSION,
+//        'phpVersion' => PHP_VERSION,
+//    ]);
+//});
+//
+//Route::get('/', ForumIndexController::class)->name('home');
+//Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->name('discussions.show');
+//
+//// New routes for additional pages
+//Route::get('/summary', [SummaryController::class, 'index'])->name('summary');
+//
+//Route::prefix('users')->name('users.')->group(function () {
+//    Route::get('/', [UserController::class, 'index'])->name('index');
+//    Route::get('/create', [UserController::class, 'create'])->name('create');
+//    Route::post('/', [UserController::class, 'store'])->name('store');
+//    Route::get('/{user}', [UserController::class, 'show'])->name('show');
+//    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+//    Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+//});
+//
+//Route::prefix('topics')->name('topics.')->group(function () {
+//    Route::get('/', [TopicController::class, 'index'])->name('index');
+//    Route::get('/create', [TopicController::class, 'create'])->name('create');
+//    Route::post('/', [TopicController::class, 'store'])->name('store');
+//    Route::get('/{topic}', [TopicController::class, 'show'])->name('show');
+//    Route::get('/{topic}/edit', [TopicController::class, 'edit'])->name('edit');
+//    Route::put('/{topic}', [TopicController::class, 'update'])->name('update');
+//    Route::delete('/{topic}', [TopicController::class, 'destroy'])->name('destroy');
+//});
+//
+//Route::prefix('discussions')->name('discussions.')->group(function () {
+//    Route::get('/', [DiscussionController::class, 'index'])->name('index');
+//    Route::get('/create', [DiscussionController::class, 'create'])->name('create');
+//    Route::post('/', [DiscussionController::class, 'store'])->name('store');
+//    Route::get('/{discussion}/edit', [DiscussionController::class, 'edit'])->name('edit');
+//    Route::put('/{discussion}', [DiscussionController::class, 'update'])->name('update');
+//    Route::delete('/{discussion}', [DiscussionController::class, 'destroy'])->name('destroy');
+//});
+//
+//Route::get('/posts', [PostController::class, 'index'])->name('posts');
+//Route::post('/markdown', MarkdownController::class)->name('markdown');
+//
+//Route::middleware('auth')->group(function () {
+//    Route::post('/discussions', DiscussionStoreController::class)->name('discussions.store');
+//    Route::post('/discussions/{discussion}/posts', PostStoreController::class)->name('posts.store');
+//    Route::delete('/discussions/{discussion}', DiscussionDestroyController::class)->name('discussions.destroy');
+//    Route::patch('/discussions/{discussion}/solution', DiscussionSolutionPatchController::class)->name('discussions.solution.patch');
+//    Route::patch('/posts/{post}', PostPatchController::class)->name('posts.patch');
+//    Route::delete('/posts/{post}', PostDestroyController::class)->name('posts.destroy');
+//
+//    Route::prefix('profile')->name('profile.')->group(function () {
+//        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+//        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+//        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+//    });
+//});
+//
+//require __DIR__ . '/auth.php';

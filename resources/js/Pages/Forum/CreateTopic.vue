@@ -74,12 +74,12 @@ function generateSlug() {
 function createTopic() {
     form.post(route('topics.store'), {
         onSuccess: () => {
-            router.get(route('topics'));
+            router.get(route('topics.index'));
         },
     });
 }
 
 function goBack() {
-    router.get(route('topics'));
+    router.get(route('topics.index'));
 }
 </script>

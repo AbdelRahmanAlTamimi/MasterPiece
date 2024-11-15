@@ -14,26 +14,36 @@ class DiscussionController extends Controller
 {
     public function index()
     {
-        $discussions = Discussion::all();
+        $discussions = Discussion::with('user', 'topic')->get()->map(function ($discussion) {
+            return [
+                'id' => $discussion->id,
+                'title' => $discussion->title,
+                'username' => $discussion->user ? $discussion->user->name : 'Deleted User',
+                'topic' => $discussion->topic->title,
+            ];
+        });
+
         return Inertia::render('Forum/Discussions', [
             'discussions' => $discussions,
         ]);
     }
 
-    public function create()
-    {
 
-    }
-
-    public function store(Request $request)
-    {
-
-    }
 
     public function show(Discussion $discussion)
     {
         return Inertia::render('Forum/DiscussionDetails', [
-            'discussion' => $discussion,
+            'discussion' => [
+                'id' => $discussion->id,
+                'title' => $discussion->title,
+                'username' => $discussion->user?->name ?? 'N/A',
+                'topic' => $discussion->topic->title,
+                'slug' => $discussion->slug,
+            ],
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error'),
+            ],
         ]);
     }
 

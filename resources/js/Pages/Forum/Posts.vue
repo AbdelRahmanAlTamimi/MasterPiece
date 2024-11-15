@@ -1,14 +1,16 @@
 <template>
     <NavigationMenu />
     <div class="mt-2 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <DataTable
-            title="Discussions"
+            title="Posts"
             :headers="tableHeaders"
-            :items="discussions"
-            @view="viewDiscussion"
-            @edit="editDiscussion"
-            @delete="deleteDiscussion"
+            :items="posts"
+            :showDetailsButton="true"
+            :showEditButton="false"
+            :showDeleteButton="true"
+            @view="viewPost"
+            @edit="editPost"
+            @delete="deletePost"
         />
     </div>
 </template>
@@ -21,30 +23,30 @@ import DataTable from '@/Components/DataTable.vue';
 import Swal from "sweetalert2";
 
 defineProps({
-    discussions: {
+    posts: {
         type: Array,
         required: true
     }
 });
 
 const tableHeaders = [
-    { label: 'Title', key: 'title' },
+    { label: 'ID', key: 'id' },
     { label: 'Username', key: 'username' },
-    { label: 'Topic', key: 'topic' },
+    { label: 'Discussion', key: 'discussion_title' },
 ];
 
-function viewDiscussion(discussion) {
-    router.get(route('discussion.show', discussion.id));
+function viewPost(post) {
+    router.get(route('posts.show', post.id));
 }
 
-function editDiscussion(discussion) {
-    router.get(route('discussions.edit', discussion.id));
+function editPost(post) {
+    router.get(route('posts.edit', post.id));
 }
 
-function deleteDiscussion(discussion) {
+function deletePost(post) {
     Swal.fire({
         title: 'Are you sure?',
-        text: `You want to delete the discussion titled "${discussion.title}"?`,
+        text: `You want to delete the post with ID "${post.id}"?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#EF4444', // red-500
@@ -54,11 +56,11 @@ function deleteDiscussion(discussion) {
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('discussions.destroy', discussion.id), {
+            router.delete(route('post.destroy', post.id), {
                 onSuccess: () => {
                     Swal.fire({
                         title: 'Deleted!',
-                        text: 'Discussion has been deleted.',
+                        text: 'Post has been deleted.',
                         icon: 'success',
                         timer: 2000,
                         showConfirmButton: false

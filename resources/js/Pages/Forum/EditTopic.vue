@@ -109,6 +109,6 @@ function submit() {
 }
 
 function goBack() {
-    router.get(route('topics'));
+    router.get(route('topics.index'));
 }
 </script>

@@ -14,6 +14,9 @@
             title="Topics"
             :headers="tableHeaders"
             :items="topics"
+            :showDetailsButton="false"
+            :showEditButton="true"
+            :showDeleteButton="true"
             @edit="editTopic"
             @delete="deleteTopic"
         />

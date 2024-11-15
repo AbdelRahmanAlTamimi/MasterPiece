@@ -33,16 +33,16 @@ const showingNavigationDropdown = ref(false);
                         <NavLink :href="route('summary')" :active="route().current('summary')" class="text-gray-100">
                             Summary
                         </NavLink>
-                        <NavLink :href="route('users')" :active="route().current('users')" class="text-gray-100">
+                        <NavLink :href="route('users.index')" :active="route().current('users')" class="text-gray-100">
                             Users
                         </NavLink>
-                        <NavLink :href="route('topics')" :active="route().current('topics')" class="text-gray-100">
+                        <NavLink :href="route('topics.index')" :active="route().current('topics')" class="text-gray-100">
                             Topics
                         </NavLink>
-                        <NavLink :href="route('discussions')" :active="route().current('discussions')" class="text-gray-100">
+                        <NavLink :href="route('discussions.index')" :active="route().current('discussions')" class="text-gray-100">
                             Discussions
                         </NavLink>
-                        <NavLink :href="route('posts')" :active="route().current('posts')" class="text-gray-100">
+                        <NavLink :href="route('posts.index')" :active="route().current('posts')" class="text-gray-100">
                             Posts
                         </NavLink>
                     </div>
@@ -140,16 +140,16 @@ const showingNavigationDropdown = ref(false);
                 <ResponsiveNavLink :href="route('summary')" :active="route().current('summary')">
                     Summary
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('users')" :active="route().current('users')">
+                <ResponsiveNavLink :href="route('users.index')" :active="route().current('users')">
                     Users
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('topics')" :active="route().current('topics')">
+                <ResponsiveNavLink :href="route('topics.index')" :active="route().current('topics')">
                     Topics
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('discussions')" :active="route().current('discussions')">
+                <ResponsiveNavLink :href="route('discussions.index')" :active="route().current('discussions')">
                     Discussions
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('posts')" :active="route().current('posts')">
+                <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts')">
                     Posts
                 </ResponsiveNavLink>
             </div>

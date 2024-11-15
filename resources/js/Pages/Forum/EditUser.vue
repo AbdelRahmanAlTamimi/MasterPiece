@@ -76,7 +76,7 @@ function updateUser() {
 }
 
 function goBack() {
-    router.get(route('users'));
+    router.get(route('users.index'));
 }
 </script>
 

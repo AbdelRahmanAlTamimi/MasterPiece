@@ -130,6 +130,6 @@ function submit() {
 }
 
 function goBack() {
-    router.get(route('discussions'));
+    router.get(route('discussions.index'));
 }
 </script>
