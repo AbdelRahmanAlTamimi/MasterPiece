@@ -32,7 +32,7 @@ const isAdmin = computed(() => {
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <div class="hidden space-x-8 md:-my-px md:ms-10 md:flex">
                         <NavLink :href="route('home')" :active="route().current('home')" class="text-gray-100">
                             Forum
                         </NavLink>
@@ -80,7 +80,7 @@ const isAdmin = computed(() => {
                     </div>
                 </div>
 
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="hidden md:flex md:items-center md:ms-6">
                     <!-- Settings Dropdown -->
                     <div class="ms-3 relative" v-if="$page.props.auth.user">
                         <Dropdown align="right" width="48">
@@ -117,7 +117,7 @@ const isAdmin = computed(() => {
                         </Dropdown>
                     </div>
 
-                    <div v-else class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex h-16">
+                    <div v-else class="hidden space-x-8 md:-my-px md:ml-10 md:flex h-16">
                         <NavLink :href="route('login')" :active="route().current('login')">
                             Login
                         </NavLink>
@@ -128,10 +128,10 @@ const isAdmin = computed(() => {
                 </div>
 
                 <!-- Hamburger -->
-                <div class="-me-2 flex items-center sm:hidden">
+                <div class="-me-2 flex items-center md:hidden">
                     <button
                         @click="showingNavigationDropdown = !showingNavigationDropdown"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out"
                     >
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path
@@ -163,7 +163,7 @@ const isAdmin = computed(() => {
         <!-- Responsive Navigation Menu -->
         <div
             :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-            class="sm:hidden"
+            class="md:hidden"
         >
             <div class="pt-2 pb-3 space-y-1">
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">

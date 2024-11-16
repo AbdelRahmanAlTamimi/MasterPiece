@@ -118,7 +118,7 @@ Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->n
 Route::prefix('posts')->middleware(['auth', 'admin'])->name('posts.')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/{post}', [PostController::class, 'show'])->name('show');
-    Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
+    Route::delete('/{post}', [PostController::class, 'destroy'])->name('delete');
 });
 
 Route::middleware('auth')->group(function () {

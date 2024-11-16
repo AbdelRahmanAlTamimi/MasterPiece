@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="text-gray-500 text-sm mt-3 line-clamp-1">
-                    {{ discussion.post.body_preview }}
+                    {{ discussion.post ? discussion.post.body_preview : '' }}
                 </div>
 
                 <Link :href="`${route('discussions.show', discussion)}?post=${discussion.latest_post.id}`" class="inline-block text-sm mt-3">

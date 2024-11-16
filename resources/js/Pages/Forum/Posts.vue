@@ -56,7 +56,7 @@ function deletePost(post) {
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('post.destroy', post.id), {
+            router.delete(route('posts.delete', post.id), {
                 onSuccess: () => {
                     Swal.fire({
                         title: 'Deleted!',

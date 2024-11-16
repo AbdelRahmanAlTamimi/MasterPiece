@@ -34,7 +34,7 @@ class ForumIndexController extends Controller
                             return $builder->whereIn('id', Discussion::search($request->search)->get()->pluck('id'));
                         }
                     })
-                    ->paginate(10)
+                    ->paginate(5)
                     ->appends($request->query())
             )
         ]);

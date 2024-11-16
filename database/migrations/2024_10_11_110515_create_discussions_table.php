@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('discussions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('topic_id')->nullable()->constrained();
+            $table->foreignId('topic_id')->nullable()->constrained()->onDelete('set null');
             $table->string('title');
             $table->string('slug')->unique()->nullable();
             $table->timestamps();
