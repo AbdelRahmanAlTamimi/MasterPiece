@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class DiscussionDestroyController extends Controller
 {
-    public function __invoke(DiscussionDestroyRequest $request, Discussion $discussion)
+    public function __invoke( Discussion $discussion)
     {
         $discussion->delete();
 

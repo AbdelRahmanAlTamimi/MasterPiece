@@ -24,15 +24,16 @@ class PostController extends Controller
     public function show(Post $post)
     {
 
-        $post->load('user', 'discussion');
-
+        $post->load(['user', 'discussion' => function ($query) {
+            $query->withTrashed();
+        }]);
         return Inertia::render('Forum/PostDetails', [
             'post' => [
                 'id' => $post->id,
                 'body' => $post->body,
                 'createdAt' => $post->created_at->format('M d, Y'),
                 'username' => $post->user->name,
-                'discussionTitle' => $post->discussion->title,
+                'discussionTitle' => $post->discussion?->title,
             ],
             'flash' => [
                 'success' => session('success'),

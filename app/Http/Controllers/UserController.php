@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Validation\Rule;
 
 
 class UserController extends Controller
@@ -56,6 +57,28 @@ class UserController extends Controller
         return Inertia::render('Forum/EditUser', [
             'user' => $user,
         ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'role' => 'required|in:admin,user',
+        ]);
+
+        // Update the user
+        $user->update($validated);
+
+        // Redirect back with success message
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy(User $user)

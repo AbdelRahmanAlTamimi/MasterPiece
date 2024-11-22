@@ -9,7 +9,7 @@
         </div>
         <div class="w-full">
             <div>
-                <div>{{ post.user?.username || '[user deleted]' }}</div>
+                <div>{{ post.user?.username || '[previous user]' }}</div>
                 <div class="text-sm text-gray-500">Posted <time :datetime="post.created_at.datetime" :title="post.created_at.datetime">{{ post.created_at.human }}</time></div>
             </div>
             <div class="mt-3">
@@ -62,6 +62,7 @@ import InputError from '../InputError.vue';
 import PrimaryButton from '../PrimaryButton.vue';
 import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
+import {route} from "ziggy-js";
 
 const props = defineProps({
     post: Object,

@@ -5,6 +5,11 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+
+const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+const emailError = ref('');
+const showEmailHelper = ref(false);
 
 const form = useForm({
     username: '',
@@ -14,7 +19,31 @@ const form = useForm({
     password_confirmation: '',
 });
 
+// Email validation function
+const validateEmail = (email) => {
+    if (!email) {
+        emailError.value = 'Email is required';
+        return false;
+    }
+    if (!emailPattern.test(email)) {
+        emailError.value = 'Please enter a valid email address (e.g., username@email.com)';
+        return false;
+    }
+    emailError.value = '';
+    return true;
+};
+
+// Watch for email changes
+watch(() => form.email, (newValue) => {
+    validateEmail(newValue);
+});
+
 const submit = () => {
+    // Validate email before submission
+    if (!validateEmail(form.email)) {
+        return;
+    }
+
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
@@ -66,7 +95,26 @@ const submit = () => {
                     v-model="form.email"
                     required
                     autocomplete="username"
+                    pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
+                    @input="validateEmail(form.email)"
+                    @focus="showEmailHelper = true"
+                    @blur="showEmailHelper = false"
+                    :class="{ 'border-red-500': emailError }"
                 />
+                <div class="mt-1 text-sm">
+                    <p class="text-gray-500" v-if="showEmailHelper">
+                        Email must:
+                        <ul class="list-disc ml-5">
+                            <li>Contain a username (letters, numbers, dots, underscores, or hyphens)</li>
+                            <li>Include @ symbol</li>
+                            <li>Have a valid domain (e.g., gmail.com, yahoo.com)</li>
+                        </ul>
+                    </p>
+                    <!-- Error Message -->
+                    <p v-if="emailError" class="text-red-500 mt-1">
+                        {{ emailError }}
+                    </p>
+                </div>
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
@@ -116,3 +164,12 @@ const submit = () => {
         </form>
     </GuestLayout>
 </template>
+
+<style scoped>
+.border-red-500 {
+    border-color: rgb(239, 68, 68);
+}
+.text-sm {
+    transition: all 0.3s ease;
+}
+</style>[

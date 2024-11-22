@@ -38,7 +38,10 @@
                 <div class="col-span-2 md:col-span-1">
                     <div class="mb-4">
                         <h3 class="text-gray-600 text-sm font-semibold">Discussion Title</h3>
-                        <p class="text-gray-900">{{ post.discussionTitle }}</p>
+                        <p class="text-gray-900">
+                            <span v-if="post.discussionTitle">{{ post.discussionTitle }}</span>
+                            <span v-else class="text-red-500 italic">Deleted Discussion</span>
+                        </p>
                     </div>
                     <div class="mb-4">
                         <h3 class="text-gray-600 text-sm font-semibold">Author</h3>
