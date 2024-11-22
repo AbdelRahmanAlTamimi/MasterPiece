@@ -7,6 +7,7 @@
             :headers="tableHeaders"
             :items="discussions"
             :showDetailsButton="false"
+            :showEditButton="false"
             @view="viewDiscussion"
             @edit="editDiscussion"
             @delete="deleteDiscussion"
